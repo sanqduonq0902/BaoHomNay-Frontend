@@ -6,16 +6,17 @@ const Navbar = () => {
   const links = [
     { label: 'Trang chủ', path: '/' },
     { label: 'Thời sự', path: '/thoisu', value: 'thoisu' },
-    { label: 'Giáo dục', path: '/giaoduc', value: 'giaoduc'},
+    { label: 'Chính trị', path: '/chinhtri', value: 'chinhtri'},
     { label: 'Xã hội', path: '/xahoi', value: 'xahoi' },
     { label: 'Khoa học', path: '/khoahoc', value: 'khoahoc' },
-    { label: 'Thể thao', path: '/thethao', value: 'thethao' },
-    { label: 'Công nghệ', path: '/congnghe', value: 'congnghe' },
-    { label: 'Thế giới', path: '/thegioi', value: 'thegioi' },
+    { label: 'Văn hóa - Nghệ thuật', path: '/vanhoanghethuat', value: 'vanhoanghethuat' },
+    { label: 'Kinh tế', path: '/kinhte', value: 'kinhte' },
+    { label: 'Quốc tế', path: '/quocte', value: 'quocte' },
+    { label: 'Tin giả & sự thật', path: '/tingiasuthat', value: 'tingiasuthat' },
   ];
 
   return (
-    <nav className="bg-indigo-600 w-full">
+    <nav className="bg-indigo-900 w-full">
       <div className="max-w-screen-xl mx-auto w-full py-2 flex justify-center items-center gap-6 text-white font-medium">
         {links.map((link) => (
           <NavLink

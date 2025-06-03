@@ -45,3 +45,22 @@
   margin-right: auto;
   margin-left: 0;
 }
+
+.ql-editor video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover; /* hoặc contain tuỳ bạn */
+  display: block;
+  margin: 1rem 0;
+  border: none;
+}
+
+
+.ql-editor iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  display: block;
+  margin: 1rem 0;
+  border: none;
+}

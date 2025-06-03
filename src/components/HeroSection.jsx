@@ -44,7 +44,7 @@ const HeroSection = ({ featuredArticle }) => {
           <p className="text-gray-700 mt-4">{featuredArticle.summary}</p>
           <Link
             to={`/article/${featuredArticle.slug}`}
-            className="inline-block mt-6 px-5 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+            className="inline-block mt-6 px-5 py-2 bg-indigo-800 text-white rounded hover:bg-indigo-900 transition"
           >
             Đọc tiếp
           </Link>

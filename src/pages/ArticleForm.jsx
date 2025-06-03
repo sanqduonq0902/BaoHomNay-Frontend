@@ -18,6 +18,7 @@ const ArticleForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const quillRef = useRef(null);
+  const [editorBgColor, setEditorBgColor] = useState('#ffffff'); // mặc định trắng
 
   const { loading } = useSelector((state) => state.articles);
 
@@ -54,6 +55,30 @@ const ArticleForm = () => {
   }
 }, [selected, id]);
 
+// Upload video
+  const videoHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'video/*');
+    input.click();
+
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return;
+
+      toast.loading('Đang tải video...', { id: 'upload-video' });
+
+      try {
+        const url = await uploadToCloudinary(file, 'video'); // Bạn có thể sửa hàm uploadToCloudinary để hỗ trợ video
+        const quill = quillRef.current.getEditor();
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, 'video', url);
+        toast.success('Tải video thành công', { id: 'upload-video' });
+      } catch (err) {
+        toast.error('Tải video thất bại', { id: 'upload-video' });
+      }
+    };
+  };
 
   // Upload image to Cloudinary (used in Quill)
     const imageHandler = () => {
@@ -89,11 +114,12 @@ const ArticleForm = () => {
       ['bold', 'italic', 'underline', 'strike'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ align: [] }],
-      ['link', 'image'],
+      ['link', 'image', 'video'],
       ['clean']
     ],
     handlers: {
       image: imageHandler,
+      video: videoHandler,
     },
   },
   imageResize: {
@@ -108,9 +134,8 @@ const formats = [
   'bold', 'italic', 'underline', 'strike',
   'list', 'bullet',
   'align',
-  'link', 'image'
+  'link', 'image', 'video' // <-- thêm video
 ];
-
 
     const handleThumbnailUpload = async () => {
         if (!thumbnailFile) return thumbnailUrl;
@@ -187,12 +212,13 @@ const formats = [
           >
             <option value="">-- Chọn chuyên mục --</option>
             <option value="thoisu">Thời sự</option>
-            <option value="congnghe">Công nghệ</option>
-            <option value="giaoduc">Giáo dục</option>
+            <option value="chinhtri">Chính trị</option>
+            <option value="giaoduc">Xã hội</option>
             <option value="khoahoc">Khoa học</option>
-            <option value="thegioi">Thế giới</option>
-            <option value="thethao">Thể thao</option>
-            <option value="xahoi">Xã hội</option>
+            <option value="vanhoanghethuat">Văn hóa - Nghệ thuật</option>
+            <option value="kinhte">Kinh tế</option>
+            <option value="quocte">Quốc tế</option>
+            <option value="tingiasuthat">Tin giả & sự thật</option>
           </select>
         </div>
 
@@ -221,8 +247,16 @@ const formats = [
           )}
         </div>
 
-        <div>
-          <label className="block mb-1 font-semibold">Nội dung</label>
+          <div className="mb-4">
+            <label className="block mb-1 font-semibold">Màu nền vùng soạn thảo</label>
+            <input 
+              type="color" 
+              value={editorBgColor} 
+              onChange={(e) => setEditorBgColor(e.target.value)} 
+              className="w-16 h-10 cursor-pointer border border-gray-300 rounded"
+            />
+          </div>
+        <div style={{ backgroundColor: editorBgColor, padding: '10px', borderRadius: '6px' }}>
           <ReactQuill
             ref={quillRef}
             value={content}
@@ -230,6 +264,7 @@ const formats = [
             formats={formats}
             modules={modules}
             theme="snow"
+            style={{ backgroundColor: 'transparent', minHeight: '300px' }}
           />
         </div>
 
