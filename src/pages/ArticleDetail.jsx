@@ -41,8 +41,7 @@ const ArticleDetail = () => {
       up: selected?.votes?.up?.length || 0,
       down: selected?.votes?.down?.length || 0,
     });
-
-  }, [selected]);
+  }, [selected, upvotedArticles, downvotedArticles]);
 
 
   const handleVote = async (type) => {
