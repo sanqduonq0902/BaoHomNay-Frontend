@@ -16,11 +16,10 @@
 }
 .ql-size-large {
   font-size: 1.25rem;
+  font-family: 'Francois One', sans-serif
 }
 .ql-size-huge {
-  font-size: 1.5rem;
-  
-
+  font-size: 50px;
 }
 
 .ql-editor img {
@@ -110,3 +109,5 @@
   margin: 0 auto;
   object-fit: cover; /* nếu iframe hỗ trợ */
 }
+
+

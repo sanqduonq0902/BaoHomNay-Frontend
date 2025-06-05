@@ -58,15 +58,15 @@ const ArticleDetail = () => {
 
   return (
     <>
-      <div className="container max-w-[65%] mx-auto p-6 text-lg ">
+      <div className="container max-w-[60%] mx-auto p-6 text-lg ">
         <h2 className="text-3xl font-bold mb-2">{selected?.title}</h2>
         <p className="text-sm text-gray-600 mb-4">Tác giả: {selected?.author?.username}</p>
         <div className="prose text-lg leading-loose" dangerouslySetInnerHTML={{ __html: selected?.content }} />
-        <div className="flex gap-4 px-5 py-2 w-fit items-center">
+        <div className="flex gap-4 px-5 py-2 w-fit items-center text-black">
           <button
             className={`
             h-12 px-4 flex items-center justify-center border rounded-full transition-all cursor-pointer 
-            ${vote === 'up' ? 'bg-blue-500 text-white' : 'border-slate-400 hover:scale-115'}
+            ${vote === 'up' ? 'bg-gray-900 text-white' : 'border-slate-400 hover:scale-115'}
           `}
             onClick={() => handleVote('up')}
           >
