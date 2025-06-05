@@ -18,7 +18,7 @@ const ArticleForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const quillRef = useRef(null);
-  const [editorBgColor, setEditorBgColor] = useState('#ffffff'); // mặc định trắng
+  const [editorBgColor, setEditorBgColor] = useState('#ffffff'); 
 
   const { loading } = useSelector((state) => state.articles);
 
@@ -30,10 +30,6 @@ const ArticleForm = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [tags, setTags] = useState('');
 
-//   // Reset khi người dùng chuyển route
-//   useEffect(() => {
-//     dispatch(setSelected(null));
-//   }, [location.pathname]);
 
   // Fetch article when editing
   useEffect(() => {
@@ -75,7 +71,7 @@ const ArticleForm = () => {
         quill.insertEmbed(range.index, 'video', url);
         toast.success('Tải video thành công', { id: 'upload-video' });
       } catch (err) {
-        toast.error('Tải video thất bại', { id: 'upload-video' });
+        toast.error('Tải video thất bại', { id: 'upload-video' }, err);
       }
     };
   };
@@ -98,7 +94,7 @@ const ArticleForm = () => {
                 quill.insertEmbed(range.index, 'image', url);
                 toast.success('Tải ảnh thành công', { id: 'upload-image' });
             } catch (err) {
-                toast.error('Tải ảnh thất bại', { id: 'upload-image' });
+                toast.error('Tải ảnh thất bại', { id: 'upload-image' }, err);
             }
         };
     };

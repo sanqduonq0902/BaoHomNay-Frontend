@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+.prose img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+.prose {
+  text-align: justify; 
+}

@@ -19,13 +19,14 @@
 }
 .ql-size-huge {
   font-size: 1.5rem;
+  
+
 }
 
 .ql-editor img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  /* Hoặc bạn có thể cho các kiểu align khác nhau tùy theo class */
 }
 
 .ql-align-center img {
@@ -49,7 +50,7 @@
 .ql-editor video {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover; /* hoặc contain tuỳ bạn */
+  object-fit: cover; 
   display: block;
   margin: 1rem 0;
   border: none;
@@ -63,4 +64,49 @@
   display: block;
   margin: 1rem 0;
   border: none;
+}
+
+
+/* Căn giữa tất cả ảnh */
+.ql-editor img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Đảm bảo ảnh bên trong đoạn canh giữa vẫn giữ canh giữa */
+.ql-align-center img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Nếu bạn muốn ảnh ở left/right khi có align tương ứng */
+.ql-align-right img {
+  margin-left: auto;
+  margin-right: 0;
+}
+.ql-align-left img {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.ql-video {
+  width: 100%;
+  max-width: 100%;  /* Đảm bảo không vượt quá container */
+  height: 500px;
+  margin: 1rem auto; /* căn giữa block */
+  display: block;
+  position: relative;
+}
+
+.ql-video iframe {
+  width: 100% !important;
+  height: 200px !important;
+  border: none;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover; /* nếu iframe hỗ trợ */
 }
