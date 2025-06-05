@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-const API = import.meta.env.VITE_BACK_END_HOST
+const API = import.meta.env.VITE_BACK_END_URL
 
 const initialState = {
   list: [],

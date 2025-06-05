@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const LikedArticles = () => {
 
     const token = useSelector(state => state.auth.token)
-    const API = import.meta.env.VITE_BACK_END_HOST
+    const API = import.meta.env.VITE_BACK_END_URL
     const [articles, setArticles] = useState([]);
     const articleIds = useSelector((state) => state.auth.user?.upvotedArticles || []);
 

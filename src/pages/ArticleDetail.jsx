@@ -9,7 +9,7 @@ import { voteArticle } from '../features/auth/authSlice';
 
 const ArticleDetail = () => {
 
-  const API = import.meta.env.VITE_BACK_END_HOST
+  const API = import.meta.env.VITE_BACK_END_URL
 
   const user = useSelector(state => state.auth)
   const upvotedArticles = useSelector(state => state.auth.user?.upvotedArticles || [])

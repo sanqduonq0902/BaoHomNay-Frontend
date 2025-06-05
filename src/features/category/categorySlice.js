@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const API = 'http://localhost:5000/api/articles'
+const API = `${import.meta.env.VITE_BACK_END_HOST}/articles`
 
 const initialState = {
   category: [
