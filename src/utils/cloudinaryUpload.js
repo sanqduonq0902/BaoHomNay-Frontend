@@ -7,7 +7,7 @@ export const uploadToCloudinary = async (file, uploadPreset = 'BaoHomNay') => {
 
   // Xác định loại file (image/video)
   const fileType = file.type.startsWith('video') ? 'video' : 'image';
-
+  console.log(uploadPreset)
   // Endpoint upload phù hợp
   const endpoint = `https://api.cloudinary.com/v1_1/dr0idfkuw/${fileType}/upload`;
 
