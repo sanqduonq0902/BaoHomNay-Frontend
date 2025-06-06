@@ -44,6 +44,7 @@ const ArticleDetail = () => {
   }, [selected, upvotedArticles, downvotedArticles]);
 
 
+
   const handleVote = async (type) => {
     try {
       await dispatch(voteArticle({ articleId: selected._id, type }));
@@ -58,7 +59,7 @@ const ArticleDetail = () => {
 
   return (
     <div>
-      
+
       <div className="mx-auto">
         <div className="container max-w-[80%] mx-auto p-6 text-lg ">
           <h2 className="text-3xl font-bold mb-2">{selected?.title}</h2>
