@@ -65,7 +65,7 @@ const ArticleForm = () => {
       toast.loading('Đang tải video...', { id: 'upload-video' });
 
       try {
-        const url = await uploadToCloudinary(file, 'video'); // Bạn có thể sửa hàm uploadToCloudinary để hỗ trợ video
+        const url = await uploadToCloudinary(file, 'video'); 
         const quill = quillRef.current.getEditor();
         const range = quill.getSelection();
         quill.insertEmbed(range.index, 'video', url);
