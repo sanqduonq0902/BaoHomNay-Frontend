@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
-import ReactQuill, { Quill } from 'react-quill-new'; 
+import ReactQuill from 'react-quill-new'; 
+import Quill from 'quill';
 import ImageResize from 'quill-image-resize-module-react';
-// import ResizableVideoBlot from '../utils/ResizableVideoBlot';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createArticle,
