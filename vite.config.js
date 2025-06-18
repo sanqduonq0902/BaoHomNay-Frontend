@@ -8,4 +8,7 @@ export default defineConfig({
     react(),
     tailwindcss()
   ],
+  optimizeDeps: {
+    include: ['quill', 'quill-image-resize-module-react'],
+  },
 })

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
 import ReactQuill from 'react-quill-new';
 import Quill from 'quill';
-import ImageResize from 'quill-image-resize-module-react';
+// import ImageResize from 'quill-image-resize-module-react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createArticle,
@@ -13,11 +13,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 
-// ✅ Đúng cách để avoid lỗi readonly khi build
-// Quill.register('attributors/style/size', {
-//   whitelist: ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'],
-// });
-Quill.register('modules/imageResize', ImageResize);
+// Quill.register('modules/imageResize', ImageResize);
 
 const ArticleForm = () => {
   const selected = useSelector(state => state.articles.selected);
@@ -35,6 +31,18 @@ const ArticleForm = () => {
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [tags, setTags] = useState('');
+
+  useEffect(() => {
+    // 🧠 import động bằng ES Module (bắt buộc với Vite)
+    const loadImageResize = async () => {
+      const Quill = (await import('quill')).default;
+      const ImageResize = (await import('quill-image-resize-module-react')).default;
+
+      Quill.register('modules/imageResize', ImageResize);
+    };
+
+    loadImageResize();
+  }, []);
 
   useEffect(() => {
     if (id) dispatch(fetchArticleById(id));
