@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import store from './store.js'
 import { Toaster } from "react-hot-toast"
 import './assets/quill.custom.css'
+import 'react-quill-new/dist/quill.snow.css';
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>

@@ -35,15 +35,12 @@ const ArticleDetail = () => {
     } else {
       setVote(null);
     }
-    console.log(votes);
 
     setVotes({
       up: selected?.votes?.up?.length || 0,
       down: selected?.votes?.down?.length || 0,
     });
   }, [selected, upvotedArticles, downvotedArticles]);
-
-
 
   const handleVote = async (type) => {
     try {
@@ -59,12 +56,14 @@ const ArticleDetail = () => {
 
   return (
     <div>
+      <div className="flex">
+        <div className='flex-1'>
 
-      <div className="mx-auto">
-        <div className="container max-w-[80%] mx-auto p-6 text-lg ">
-          <h2 className="text-3xl font-bold mb-2">{selected?.title}</h2>
+        </div>
+        <div className="flex-4 container max-w-[60%] p-6 ">
+          <h2 className="text-4xl font-bold mb-2">{selected?.title}</h2>
           <p className="text-sm text-gray-600 mb-4">Tác giả: {selected?.author?.username}</p>
-          <div className="prose text-lg leading-loose " dangerouslySetInnerHTML={{ __html: selected?.content }} />
+          <div className="article-content text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: selected?.content }} />
           <div className="flex gap-4 px-5 py-2 w-fit items-center text-black">
             <button
               className={`
@@ -85,6 +84,10 @@ const ArticleDetail = () => {
               <BiDislike />
             </button>
           </div>
+        </div>
+
+        <div className='flex-3'>
+
         </div>
       </div>
     </div>

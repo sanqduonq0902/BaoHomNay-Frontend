@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill, { Quill } from 'react-quill-new'; 
+import ImageResize from 'quill-image-resize-module-react';
+// import ResizableVideoBlot from '../utils/ResizableVideoBlot';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createArticle,
@@ -10,7 +12,12 @@ import {
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { uploadToCloudinary } from '../utils/cloudinaryUpload';
-import ImageResize from 'quill-image-resize-module-react'
+
+
+Quill.register('modules/imageResize', ImageResize);
+const Size = Quill.import('formats/size');
+Size.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'];
+Quill.register(Size, true);
 
 const ArticleForm = () => {
   const selected = useSelector(state => state.articles.selected)
@@ -30,114 +37,127 @@ const ArticleForm = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [tags, setTags] = useState('');
 
-
   // Fetch article when editing
   useEffect(() => {
     if (id) {
       dispatch(fetchArticleById(id));
     }
     console.log(selected);
-    
   }, [dispatch, id]);
 
   useEffect(() => {
-  if (id && selected) {
-    setTitle(selected.title || '');
-    setSummary(selected.summary || '');
-    setCategory(selected.category || '');
-    setContent(selected.content || '');
-    setThumbnailUrl(selected.thumbnail || '');
-    setTags(selected.tags ? selected.tags.join(', ') : '');
-  }
-}, [selected, id]);
+    if (id && selected) {
+      setTitle(selected.title || '');
+      setSummary(selected.summary || '');
+      setCategory(selected.category || '');
+      setContent(selected.content || '');
+      setThumbnailUrl(selected.thumbnail || '');
+      setTags(selected.tags ? selected.tags.join(', ') : '');
+    }
+  }, [selected, id]);
 
-// Upload video
-  const videoHandler = () => {
+  // Upload video
+const videoHandler = () => {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'file');
+  input.setAttribute('accept', 'video/*');
+  input.click();
+
+  input.onchange = async () => {
+    const file = input.files[0];
+    if (!file) {
+      toast.error('Không có file được chọn');
+      return;
+    }
+
+    toast.loading('Đang tải video...', { id: 'upload-video' });
+
+    try {
+      const url = await uploadToCloudinary(file, 'video');
+
+      const quill = quillRef.current?.getEditor();
+      if (!quill) {
+        toast.error('Không tìm thấy trình soạn thảo');
+        return;
+      }
+
+      const range = quill.getSelection() || { index: 0 };
+
+      // ✅ Dùng loại mặc định 'video' của Quill (không cần custom blot)
+      quill.insertEmbed(range.index, 'video', url, 'user');
+      quill.setSelection(range.index + 1);
+      toast.success('Tải video thành công', { id: 'upload-video' });
+    } catch (err) {
+      toast.error('Tải video thất bại', { id: 'upload-video' });
+      console.error(err);
+    }
+  };
+};
+
+
+  // Upload image to Cloudinary (used in Quill)
+  const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'video/*');
+    input.setAttribute('accept', 'image/*');
     input.click();
 
     input.onchange = async () => {
       const file = input.files[0];
       if (!file) return;
-
-      toast.loading('Đang tải video...', { id: 'upload-video' });
+      
+      toast.loading('Đang tải ảnh...', { id: 'upload-image' });
 
       try {
-        const url = await uploadToCloudinary(file, 'video'); 
-        const quill = quillRef.current.getEditor();
-        const range = quill.getSelection();
-        quill.insertEmbed(range.index, 'video', url);
-        toast.success('Tải video thành công', { id: 'upload-video' });
+        const url = await uploadToCloudinary(file);
+        const quill = quillRef.current?.getEditor();
+        if (quill) {
+          const range = quill.getSelection() || { index: 0 };
+          quill.insertEmbed(range.index, 'image', url);
+        }
+        toast.success('Tải ảnh thành công', { id: 'upload-image' });
       } catch (err) {
-        toast.error('Tải video thất bại', { id: 'upload-video' }, err);
+        toast.error('Tải ảnh thất bại', { id: 'upload-image' });
+        console.error(err);
       }
     };
   };
 
-  // Upload image to Cloudinary (used in Quill)
-    const imageHandler = () => {
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.click();
-
-        input.onchange = async () => {
-            const file = input.files[0];
-            toast.loading('Đang tải ảnh...', { id: 'upload-image' });
-
-            try {
-                const url = await uploadToCloudinary(file);
-                const quill = quillRef.current.getEditor();
-                const range = quill.getSelection();
-                quill.insertEmbed(range.index, 'image', url);
-                toast.success('Tải ảnh thành công', { id: 'upload-image' });
-            } catch (err) {
-                toast.error('Tải ảnh thất bại', { id: 'upload-image' }, err);
-            }
-        };
-    };
-
-  Quill.register('modules/imageResize', ImageResize)
-
+  // Simplified modules configuration
   const modules = useMemo(() => ({
-  toolbar: {
-    container: [
-      [{ header: [1, 2, 3, false] }],
-      [{ size: ['small', false, 'large', 'huge'] }],
-      [{ color: [] }, { background: [] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ align: [] }],
-      ['link', 'image', 'video'],
-      ['clean']
-    ],
-    handlers: {
-      image: imageHandler,
-      video: videoHandler,
+    toolbar: {
+      container: [
+        // [{ header: [1, 2, 3, false] }],
+        [{ size: ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'] }],
+        [{ color: [] }, { background: [] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        [{ align: [] }],
+        ['link', 'image', 'video'],
+        ['clean']
+      ],
+      handlers: {
+        image: imageHandler,
+        video: videoHandler,
+      },
     },
-  },
-  imageResize: {
-    modules: ['Resize', 'DisplaySize'],
-  },
-}), []);
+    imageResize: {
+      parchment: Quill.import('parchment'),
+      modules: ['Resize', 'DisplaySize', 'Toolbar'],
+    },
+  }), []);
 
-const formats = [
-  'header',
-  'size',
-  'color', 'background',
-  'bold', 'italic', 'underline', 'strike',
-  'list', 'bullet',
-  'align',
-  'link', 'image', 'video' // <-- thêm video
-];
+  // Simplified formats - only include what's actually supported
+  const formats = [
+    'header', 'size', 'color', 'background',
+    'bold', 'italic', 'underline', 'strike',
+    'list', 'align', 'link', 'image', 'video',
+  ];
 
-    const handleThumbnailUpload = async () => {
-        if (!thumbnailFile) return thumbnailUrl;
-        return await uploadToCloudinary(thumbnailFile);
-    };
-
+  const handleThumbnailUpload = async () => {
+    if (!thumbnailFile) return thumbnailUrl;
+    return await uploadToCloudinary(thumbnailFile);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -165,8 +185,8 @@ const formats = [
 
       navigate('/articles');
     } catch (err) {
-        console.log(err);
-        toast.error('Có lỗi xảy ra');
+      console.log(err);
+      toast.error('Có lỗi xảy ra');
     }
   };
 
@@ -209,7 +229,7 @@ const formats = [
             <option value="">-- Chọn chuyên mục --</option>
             <option value="thoisu">Thời sự</option>
             <option value="chinhtri">Chính trị</option>
-            <option value="giaoduc">Giáo DụcDục</option>
+            <option value="giaoduc">Giáo dục</option>
             <option value="xahoi">Xã hội</option>
             <option value="khoahoc">Khoa học</option>
             <option value="vanhoanghethuat">Văn hóa - Nghệ thuật</option>
@@ -244,16 +264,18 @@ const formats = [
           )}
         </div>
 
-          <div className="mb-4">
-            <label className="block mb-1 font-semibold">Màu nền vùng soạn thảo</label>
-            <input 
-              type="color" 
-              value={editorBgColor} 
-              onChange={(e) => setEditorBgColor(e.target.value)} 
-              className="w-16 h-10 cursor-pointer border border-gray-300 rounded"
-            />
-          </div>
-        <div style={{ backgroundColor: editorBgColor, padding: '10px', borderRadius: '6px' }}>
+        {/* <div className="mb-4">
+          <label className="block mb-1 font-semibold">Màu nền vùng soạn thảo</label>
+          <input 
+            type="color" 
+            value={editorBgColor} 
+            onChange={(e) => setEditorBgColor(e.target.value)} 
+            className="w-16 h-10 cursor-pointer border border-gray-300 rounded"
+          />
+        </div> */}
+
+        <div style={{ backgroundColor: editorBgColor, padding: '', borderRadius: '6px' }}>
+          <label className="block mb-1 font-semibold">Nội dung</label>
           <ReactQuill
             ref={quillRef}
             value={content}

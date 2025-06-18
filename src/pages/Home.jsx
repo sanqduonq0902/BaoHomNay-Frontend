@@ -4,6 +4,7 @@ import HeroSection from '../components/HeroSection';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchArticles } from '../features/articles/articleSlice';
+import Loading from '../components/Loading/Loading';
 
 const HomePage = () => {
 
@@ -11,15 +12,16 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
   const articles = useSelector(state => state.articles.list)
+  const loading = useSelector(state => state.articles.loading)
 
   useEffect(() => {
     dispatch(fetchArticles(category));
-    console.log(articles);
   }, [dispatch, category]);
 
    const featured = articles.length ? articles[0] : null;
 
   return (
+    !loading ?
     <div>
       <HeroSection featuredArticle={featured} />
       <div className="max-w-7xl mx-auto px-4">
@@ -38,6 +40,12 @@ const HomePage = () => {
         </div>
       </div>
     </div>
+    :
+    (
+      <div className='w-full py-60 flex justify-center items-center'>
+        <Loading/>
+      </div>
+    )
   );
 };
 
