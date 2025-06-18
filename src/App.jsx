@@ -10,8 +10,12 @@ import MainLayout from './layouts/MainLayout'
 import AccountPage from './pages/AccountPage'
 import SubLayout from './layouts/SubLayout'
 import PrivateRoute from './components/PrivateRoute'
+import { useEffect } from 'react'
 
 function App() {
+
+  console.log("testing 4");
+  
   return (
     <>
       <Routes>
