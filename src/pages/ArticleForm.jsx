@@ -15,7 +15,7 @@ import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 
 
 Quill.register('modules/imageResize', ImageResize);
-const Size = Quill.import('formats/size');
+const Size = Quill.import('attributors/style/size');
 Size.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'];
 Quill.register(Size, true);
 
