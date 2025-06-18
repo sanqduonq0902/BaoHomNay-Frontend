@@ -14,9 +14,9 @@ import toast from 'react-hot-toast';
 import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 
 // ✅ Đúng cách để avoid lỗi readonly khi build
-const Size = Quill.import('attributors/style/size');
-Size.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'];
-Quill.register(Size, true);
+Quill.register('attributors/style/size', {
+  whitelist: ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'],
+});
 Quill.register('modules/imageResize', ImageResize);
 
 const ArticleForm = () => {
@@ -107,7 +107,7 @@ const ArticleForm = () => {
   const modules = useMemo(() => ({
     toolbar: {
       container: [
-        [{ size: Size.whitelist }],
+        [{ size: ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'] }],
         [{ color: [] }, { background: [] }],
         ['bold', 'italic', 'underline', 'strike'],
         [{ list: 'ordered' }, { list: 'bullet' }],
