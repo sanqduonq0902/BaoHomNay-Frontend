@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import 'react-quill-new/dist/quill.snow.css';
-import ReactQuill from 'react-quill-new'; 
+import ReactQuill from 'react-quill-new';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize-module-react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,19 +13,18 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { uploadToCloudinary } from '../utils/cloudinaryUpload';
 
-
-Quill.register('modules/imageResize', ImageResize);
+// ✅ Đúng cách để avoid lỗi readonly khi build
 const Size = Quill.import('attributors/style/size');
 Size.whitelist = ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'];
 Quill.register(Size, true);
+Quill.register('modules/imageResize', ImageResize);
 
 const ArticleForm = () => {
-  const selected = useSelector(state => state.articles.selected)
+  const selected = useSelector(state => state.articles.selected);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const quillRef = useRef(null);
-  const [editorBgColor, setEditorBgColor] = useState('#ffffff'); 
 
   const { loading } = useSelector((state) => state.articles);
 
@@ -37,12 +36,8 @@ const ArticleForm = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [tags, setTags] = useState('');
 
-  // Fetch article when editing
   useEffect(() => {
-    if (id) {
-      dispatch(fetchArticleById(id));
-    }
-    console.log(selected);
+    if (id) dispatch(fetchArticleById(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -56,46 +51,34 @@ const ArticleForm = () => {
     }
   }, [selected, id]);
 
-  // Upload video
-const videoHandler = () => {
-  const input = document.createElement('input');
-  input.setAttribute('type', 'file');
-  input.setAttribute('accept', 'video/*');
-  input.click();
+  const videoHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'video/*');
+    input.click();
 
-  input.onchange = async () => {
-    const file = input.files[0];
-    if (!file) {
-      toast.error('Không có file được chọn');
-      return;
-    }
+    input.onchange = async () => {
+      const file = input.files[0];
+      if (!file) return toast.error('Không có file được chọn');
 
-    toast.loading('Đang tải video...', { id: 'upload-video' });
+      toast.loading('Đang tải video...', { id: 'upload-video' });
 
-    try {
-      const url = await uploadToCloudinary(file, 'video');
+      try {
+        const url = await uploadToCloudinary(file, 'video');
+        const quill = quillRef.current?.getEditor();
+        if (!quill) return toast.error('Không tìm thấy trình soạn thảo');
 
-      const quill = quillRef.current?.getEditor();
-      if (!quill) {
-        toast.error('Không tìm thấy trình soạn thảo');
-        return;
+        const range = quill.getSelection() || { index: 0 };
+        quill.insertEmbed(range.index, 'video', url, 'user');
+        quill.setSelection(range.index + 1);
+        toast.success('Tải video thành công', { id: 'upload-video' });
+      } catch (err) {
+        toast.error('Tải video thất bại', { id: 'upload-video' });
+        console.error(err);
       }
-
-      const range = quill.getSelection() || { index: 0 };
-
-      // ✅ Dùng loại mặc định 'video' của Quill (không cần custom blot)
-      quill.insertEmbed(range.index, 'video', url, 'user');
-      quill.setSelection(range.index + 1);
-      toast.success('Tải video thành công', { id: 'upload-video' });
-    } catch (err) {
-      toast.error('Tải video thất bại', { id: 'upload-video' });
-      console.error(err);
-    }
+    };
   };
-};
 
-
-  // Upload image to Cloudinary (used in Quill)
   const imageHandler = () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
@@ -105,16 +88,14 @@ const videoHandler = () => {
     input.onchange = async () => {
       const file = input.files[0];
       if (!file) return;
-      
+
       toast.loading('Đang tải ảnh...', { id: 'upload-image' });
 
       try {
         const url = await uploadToCloudinary(file);
         const quill = quillRef.current?.getEditor();
-        if (quill) {
-          const range = quill.getSelection() || { index: 0 };
-          quill.insertEmbed(range.index, 'image', url);
-        }
+        const range = quill.getSelection() || { index: 0 };
+        quill.insertEmbed(range.index, 'image', url);
         toast.success('Tải ảnh thành công', { id: 'upload-image' });
       } catch (err) {
         toast.error('Tải ảnh thất bại', { id: 'upload-image' });
@@ -123,18 +104,16 @@ const videoHandler = () => {
     };
   };
 
-  // Simplified modules configuration
   const modules = useMemo(() => ({
     toolbar: {
       container: [
-        // [{ header: [1, 2, 3, false] }],
-        [{ size: ['10px', '12px', '14px', '16px', '18px', '20px', '24px', '32px', '36px', '40px', '44px'] }],
+        [{ size: Size.whitelist }],
         [{ color: [] }, { background: [] }],
         ['bold', 'italic', 'underline', 'strike'],
         [{ list: 'ordered' }, { list: 'bullet' }],
         [{ align: [] }],
         ['link', 'image', 'video'],
-        ['clean']
+        ['clean'],
       ],
       handlers: {
         image: imageHandler,
@@ -147,9 +126,8 @@ const videoHandler = () => {
     },
   }), []);
 
-  // Simplified formats - only include what's actually supported
   const formats = [
-    'header', 'size', 'color', 'background',
+    'size', 'color', 'background',
     'bold', 'italic', 'underline', 'strike',
     'list', 'align', 'link', 'image', 'video',
   ];
@@ -161,19 +139,11 @@ const videoHandler = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const tagsArray = tags.split(',').map((t) => t.trim()).filter(Boolean);
 
     try {
       const finalThumbnail = await handleThumbnailUpload();
-      const data = {
-        title,
-        summary,
-        category,
-        content,
-        thumbnail: finalThumbnail,
-        tags: tagsArray,
-      };
+      const data = { title, summary, category, content, thumbnail: finalThumbnail, tags: tagsArray };
 
       if (id) {
         await dispatch(updateArticle({ id, data })).unwrap();
@@ -185,8 +155,8 @@ const videoHandler = () => {
 
       navigate('/articles');
     } catch (err) {
-      console.log(err);
       toast.error('Có lỗi xảy ra');
+      console.error(err);
     }
   };
 
@@ -274,7 +244,7 @@ const videoHandler = () => {
           />
         </div> */}
 
-        <div style={{ backgroundColor: editorBgColor, padding: '', borderRadius: '6px' }}>
+        <div style={{padding: '', borderRadius: '6px' }}>
           <label className="block mb-1 font-semibold">Nội dung</label>
           <ReactQuill
             ref={quillRef}
