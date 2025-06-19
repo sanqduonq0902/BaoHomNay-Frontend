@@ -12,6 +12,7 @@ import SubLayout from './layouts/SubLayout'
 import PrivateRoute from './components/PrivateRoute'
 import { useEffect } from 'react'
 import ScrollToTop from './components/ScrollToTop'
+import CategoryPage from './pages/CategoryPage'
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
           path="/:category"
           element={
             <MainLayout>
-              <Home />
+              <CategoryPage/>
             </MainLayout>
           }
         />

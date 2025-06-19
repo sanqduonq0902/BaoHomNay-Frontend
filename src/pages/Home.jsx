@@ -44,22 +44,6 @@ const HomePage = () => {
     !loading ?
     <div>
       <HeroSection featuredArticle={featured} />
-      {/* <div className="w-[75%] mx-auto px-4">
-        <h2 className="text-xl font-bold mb-4">Bài viết mới nhất</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {articles.slice(1).map((article) => (
-            <div key={article._id} className="bg-white rounded shadow p-4">
-              <img src={article.thumbnail} alt={article.title} className="h-40 w-full object-cover rounded" />
-              <h3 className="text-lg font-semibold mt-2">{article.title}</h3>
-              <p className="text-sm text-gray-600">{article.summary}</p>
-              <Link to={`/article/${article.slug}`} className="text-indigo-600 mt-2 inline-block">
-                Xem chi tiết
-              </Link>
-            </div>
-          ))}
-        </div>
-      </div> */}
-
       <div
         className='w-[75%] pb-5 mx-auto flex justify-between items-start gap-4
       '>
