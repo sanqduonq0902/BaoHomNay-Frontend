@@ -1,5 +1,6 @@
 // src/components/HeroSection.jsx
 import { Link } from 'react-router-dom';
+import hero from '../assets/hero.jpg'
 
 const HeroSection = ({ featuredArticle }) => {
   if (!featuredArticle) return null;
@@ -27,8 +28,13 @@ const HeroSection = ({ featuredArticle }) => {
 
 
   return (
-    <section className="relative bg-gray-100 mb-8">
-      <div className="max-w-7xl mx-auto px-4 py-8 md:flex md:gap-8">
+    <section className="relative flex justify-center bg-gray-100 mb-8">
+        <img 
+          src={hero}
+          alt="hero"
+          className='w-[75%] max-h-25 object-cover object-center' 
+        />  
+      {/* <div className="max-w-7xl mx-auto px-4 py-8 md:flex md:gap-8">
         <div className="md:w-1/2">
           <img
             src={featuredArticle.thumbnail}
@@ -49,7 +55,7 @@ const HeroSection = ({ featuredArticle }) => {
             Đọc tiếp
           </Link>
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
