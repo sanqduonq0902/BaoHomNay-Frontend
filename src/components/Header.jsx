@@ -28,7 +28,7 @@ const Header = () => {
   }
 
   return (
-  <header className="bg-white shadow sticky top-0 z-50">
+  <header className="bg-white shadow top-0 z-50">
     <div className='py-2 w-full flex items-center justify-around'>
       <div 
           className='
@@ -146,8 +146,6 @@ const Header = () => {
         }
         
     </div>
-    
-    <Navbar/>
   </header>
 )};
 

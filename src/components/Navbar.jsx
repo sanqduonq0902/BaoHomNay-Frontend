@@ -16,7 +16,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-blue-900 w-full">
+    <nav className="sticky top-0 bg-blue-900 w-full">
       <div className="max-w-screen-xl mx-auto w-full py-2 flex justify-center items-center gap-6 text-white font-medium">
         {links.map((link) => (
           <NavLink
