@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchArticles } from '../features/articles/articleSlice';
 import Loading from '../components/Loading/Loading';
+import { GoDot } from "react-icons/go";
 
 const HomePage = () => {
 
@@ -44,14 +45,14 @@ const HomePage = () => {
       </div> */}
 
       <div
-        className='w-[75%] mx-auto flex justify-center items-center gap-4 cursor-pointer
+        className='w-[75%] pb-5 mx-auto flex justify-between items-start gap-4
       '>
         <div
-          className='flex-6 flex flex-col gap-2
+          className='flex-7 flex flex-col gap-2
         '>
           <div
             onClick={() => navigate(`/article/${featured.slug}`)}
-            className='flex bg-gray-100 gap-2
+            className='flex bg-gray-100 gap-2 cursor-pointer
           '>
             <img src={featured?.thumbnail} alt="" className='flex-6 w-110 object-cover object-center' />
             <div className='flex-4 p-5 flex flex-col items-center gap-3'>
@@ -64,7 +65,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className='w-full flex items-center gap-3'>
+          <div className='w-full flex gap-3'>
             {
               articles
               .filter((_, index) => index >= 1 && index <= 3)
@@ -77,7 +78,7 @@ const HomePage = () => {
                   <span className='font-semibold text-ellipsis line-clamp-2 text-black/80'>
                     {article.title}
                   </span>
-                  <p className='text-slate-600 text-ellipsis line-clamp-4 text-[14px]'>
+                  <p className='text-slate-600 text-ellipsis line-clamp-5 text-[14px]'>
                     {article.summary}
                   </p>
                 </div>
@@ -86,8 +87,25 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className='flex-4'>
-          
+        <div className='flex-4 flex flex-col gap-3'>
+          {
+            articles
+            .filter((_, index) => index >= 4 && index <= 10)
+            .map((article, inded) => (
+              <div key={article._id}>
+                <div
+                  onClick={() => navigate(`/article/${article?.slug}`)}
+                  className='py-2 px-1 flex gap-2 justify-start items-center text-black/80 cursor-pointer hover:text-blue-900 transition-all'
+                >
+                  <GoDot className='text-slate-500 w-4 h-4 flex-shrink-0' />
+                  <span className='text-lg'>
+                    {article.title}
+                  </span>
+                </div>
+                <hr className='w-full self-center text-slate-200' />
+              </div>
+            ))
+          }
         </div>
       </div>
     </div>
