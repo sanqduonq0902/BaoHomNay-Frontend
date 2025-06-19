@@ -113,7 +113,7 @@ const HomePage = () => {
           <div className='flex-6 flex flex-col gap-3'>
             {
               articles
-              .filter((_, index) => index >= 10)
+              .filter((_, index) => index >= 10 && index <= 18)
               .map(article => (
                 <>
                   <div
