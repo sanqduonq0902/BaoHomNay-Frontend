@@ -91,14 +91,14 @@ const HomePage = () => {
           {
             articles
             .filter((_, index) => index >= 4 && index <= 10)
-            .map((article, inded) => (
+            .map((article, index) => (
               <div key={article._id}>
                 <div
                   onClick={() => navigate(`/article/${article?.slug}`)}
                   className='py-2 px-1 flex gap-2 justify-start items-center text-black/80 cursor-pointer hover:text-blue-900 transition-all'
                 >
                   <GoDot className='text-slate-500 w-4 h-4 flex-shrink-0' />
-                  <span className='text-lg'>
+                  <span className='text-ellipsis line-clamp-2'>
                     {article.title}
                   </span>
                 </div>
@@ -107,6 +107,44 @@ const HomePage = () => {
             ))
           }
         </div>
+      </div>
+
+      <div className='w-[75%] mx-auto flex justify-between gap-3 '>
+          <div className='flex-1 flex flex-col gap-3'>
+            {
+              articles
+              .filter((_, index) => index >= 10)
+              .map(article => (
+                <>
+                  <div
+                    key={article._id}
+                    onClick={() => navigate(`/article/${article?.slug}`)} 
+                    className='
+                      flex gap-3 py-2 cursor-pointer rounded hover:bg-slate-100
+                  '>
+                    <img 
+                      src={article.thumbnail}
+                      alt={article.title}
+                      className="flex-1 w-[50%] aspect-video object-cover object-center"
+                    />
+                    <div className='flex-1 p-2 flex flex-col justify-start gap-3'>
+                      <span className='font-semibold text-lg text-ellipsis line-clamp-2'>
+                        {article.title}
+                      </span>
+                      <p className='text-ellipsis line-clamp-4 text-slate-600'>
+                        {article.summary}
+                      </p>
+                    </div>
+                  </div>
+                  <hr className='w-full self-center text-slate-200' />
+                </>
+              ))
+            }
+          </div>
+          
+          <div className='flex-1'>
+
+          </div>
       </div>
     </div>
     :

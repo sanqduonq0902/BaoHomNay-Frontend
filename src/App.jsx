@@ -11,6 +11,7 @@ import AccountPage from './pages/AccountPage'
 import SubLayout from './layouts/SubLayout'
 import PrivateRoute from './components/PrivateRoute'
 import { useEffect } from 'react'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
   
   return (
     <>
+      <ScrollToTop/>
       <Routes>
         {/* Layout chính cho người dùng */}
         <Route
