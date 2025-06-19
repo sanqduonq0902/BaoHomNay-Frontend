@@ -27,6 +27,20 @@ const Header = () => {
     dispatch(logout())
   }
 
+  function getFormattedDate() {
+    const date = new Date();
+
+    // Tùy chọn định dạng theo ngôn ngữ "vi-VN"
+    const formatted = date.toLocaleDateString('vi-VN', {
+      weekday: 'long',    // Thứ hai, Thứ ba, ...
+      day: '2-digit',     // 01, 02, ...
+      month: '2-digit',   // 01, 02, ...
+      year: 'numeric'     // 2025
+    });
+
+    return formatted;
+  }
+
   return (
   <header className="bg-white shadow top-0 z-110">
     <div className='py-2 w-full flex items-center justify-around'>
@@ -35,7 +49,9 @@ const Header = () => {
             flex flex-1 flex-col items-center justify-center gap-2
       '>
         <span className='font-semibold text-blue-900'>
-          Thứ bảy, 14/06/2025
+          {
+            getFormattedDate()
+          }
         </span>
         <div className='flex items-center gap-2 text-3xl'>
           <FaFacebook className='text-sky-700 cursor-pointer hover:scale-110 transition-all'/>
