@@ -70,6 +70,7 @@ const HomePage = () => {
               .filter((_, index) => index >= 1 && index <= 3)
               .map((article, i) => (
                 <div
+                  key={article._id}
                   onClick={() => navigate(`/article/${article?.slug}`)} 
                   className='flex-1 p-2 flex flex-col gap-3 rounded cursor-pointer hover:bg-gray-100
                 '>

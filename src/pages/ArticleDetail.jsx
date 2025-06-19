@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchArticleBySlug } from '../features/articles/articleSlice';
+import { clearSelectedArticle, fetchArticleBySlug } from '../features/articles/articleSlice';
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { voteArticle } from '../features/auth/authSlice';
+import Loading from '../components/Loading/Loading';
 
 const ArticleDetail = () => {
 
@@ -21,9 +22,9 @@ const ArticleDetail = () => {
   const [votes, setVotes] = useState({ up: 0, down: 0 });
 
   useEffect(() => {
+    dispatch(clearSelectedArticle()); // reset selected trước
     dispatch(fetchArticleBySlug(slug));
-    console.log(user);
-  }, [slug])
+  }, [slug]);
 
   useEffect(() => {
     if (!selected?._id) return;
@@ -52,7 +53,11 @@ const ArticleDetail = () => {
   };
 
 
-  if (!selected) return <p>Đang tải...</p>;
+  if (!selected) return (
+    <div className='w-full min-h-screen flex justify-center items-center'>
+      <Loading/>
+    </div>
+  );
 
   return (
     <div>

@@ -74,7 +74,10 @@ const articleSlice = createSlice({
   reducers: {
     setSelected: (state) => {
       state.selected = {}
-    }
+    },
+    clearSelectedArticle: (state) => {
+      state.selected = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -110,4 +113,4 @@ const articleSlice = createSlice({
 })
 
 export default articleSlice.reducer
-export const { setSelected } = articleSlice.actions
+export const { setSelected, clearSelectedArticle } = articleSlice.actions
