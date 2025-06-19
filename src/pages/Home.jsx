@@ -47,10 +47,12 @@ const HomePage = () => {
         className='w-[75%] mx-auto flex justify-center items-center gap-4 cursor-pointer
       '>
         <div
-          onClick={() => navigate(`/article/${featured.slug}`)}
           className='flex-6 flex flex-col gap-2
         '>
-          <div className='flex bg-gray-100 gap-2'>
+          <div
+            onClick={() => navigate(`/article/${featured.slug}`)}
+            className='flex bg-gray-100 gap-2
+          '>
             <img src={featured?.thumbnail} alt="" className='flex-6 w-110 object-cover object-center' />
             <div className='flex-4 p-5 flex flex-col items-center gap-3'>
               <span className=' text-xl font-semibold text-ellipsis line-clamp-3'>
