@@ -197,7 +197,7 @@ const HomePage = () => {
               src={ad1}
               onClick={() => window.open(`https://www.airasia.com/flight/vi/vn?utm_campaign=Flights_VN_AA_RG%7CSkytrax-GHS%7C18062025%7C03072025%7Cvn-vi&af_xp=custom&pid=partnerize_int&dclid=CjkKEQjw6s7CBhDj566x8uyip9UBEiQAjBi0e3Pu9n-3BToKtOjVwJqGxE1tN6er2nxPsMj1hwJesZvw_wcB&is_retargeting=true&clickref=1100lAwCbWFE&af_click_lookback=30d&gad_source=7&gclid=CjwKCAjw6s7CBhACEiwAuHQckmRMn-A3xZOGxKSYomPINA3zgwpPHGSkEwR1ngmg5hJ5nOk7NfhyEhoCCiEQAvD_BwE&utm_content=1011l41754&utm_source=dv360&utm_medium=display&utm_campaign=indoleads2019&utm_clickref=1100lAwCbWFE&clickid=1100lAwCbWFE&af_reengagement_window=30d&af_siteid=partnerize&utm_term=Comparison%2FReview%7C5b9248587c4b9603af2ba106%7Cd308cc88-e252-420e-9495-3c4eb63c0fe5%7Chttps%3A%2F%2Fmonetoad.com%2FwoqL4W4PB0&c=Affiliate`)} 
               className='
-                w-fit sticky top-0 self-center cursor-pointer
+                w-fit sticky top-20 self-center cursor-pointer
             '/>
           </div>
           
