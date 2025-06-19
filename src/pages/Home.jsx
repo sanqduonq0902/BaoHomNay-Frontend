@@ -131,7 +131,7 @@ const HomePage = () => {
                       <span className='font-semibold text-lg text-ellipsis line-clamp-2'>
                         {article.title}
                       </span>
-                      <p className='text-ellipsis line-clamp-4 text-slate-600'>
+                      <p className='text-ellipsis line-clamp-4 text-slate-600 text-[14px]'>
                         {article.summary}
                       </p>
                     </div>
