@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute'
 import { useEffect } from 'react'
 import ScrollToTop from './components/ScrollToTop'
 import CategoryPage from './pages/CategoryPage'
+import SearchPage from './pages/SearchPage'
 
 function App() {
 
@@ -28,6 +29,14 @@ function App() {
           element={
             <MainLayout>
               <Home />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <MainLayout>
+              <SearchPage />
             </MainLayout>
           }
         />

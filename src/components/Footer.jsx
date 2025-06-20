@@ -18,7 +18,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             className="bg-blue-700 text-white p-2 rounded-full hover:bg-blue-800 transition"
           >
-            <FaFacebookF />
+            <FaFacebookF onClick={() => window.open('https://www.facebook.com/baodientukienvan')} />
           </a>
           <a
             href="https://youtube.com"

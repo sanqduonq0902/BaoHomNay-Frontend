@@ -84,7 +84,7 @@ const ArticleDetail = () => {
     <div className='flex min-h-screen overflow-visible'>
       <div className="flex-2 p-4 py-80">
         <div className="sticky top-20 z-50 flex flex-col items-end gap-4 text-3xl text-gray-600">
-          <FaFacebook className="hover:text-blue-600 cursor-pointer transition" />
+          <FaFacebook className="hover:text-blue-600 cursor-pointer transition" onClick={() => window.open('https://www.facebook.com/baodientukienvan')} />
           <AiFillTwitterCircle className="hover:text-sky-500 cursor-pointer transition" />
           <TiSocialLinkedinCircular className="hover:text-blue-700 cursor-pointer transition" />
           <SiYoutubemusic className="hover:text-red-500 cursor-pointer transition" />

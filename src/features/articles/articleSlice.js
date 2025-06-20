@@ -68,6 +68,21 @@ export const deleteArticle = createAsyncThunk('articles/delete', async (id, thun
   return id
 })
 
+export const searchArticles = createAsyncThunk(
+  'articles/searchArticles',
+  async (keyword, { rejectWithValue }) => {
+    console.log(API);
+    
+    try {
+      const res = await axios.get(`${API}/articles/search?keyword=${encodeURIComponent(keyword)}`);
+      console.log(res);
+      return res.data.articles; 
+    } catch (err) {
+      return rejectWithValue(err.response.data || err.message);
+    }
+  }
+);
+
 const articleSlice = createSlice({
   name: 'articles',
   initialState,
@@ -109,6 +124,18 @@ const articleSlice = createSlice({
       .addCase(deleteArticle.fulfilled, (state, action) => {
         state.list = state.list.filter(a => a._id !== action.payload)
       })
+      .addCase(searchArticles.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchArticles.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = action.payload;
+      })
+      .addCase(searchArticles.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 })
 
