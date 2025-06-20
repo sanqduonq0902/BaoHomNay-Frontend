@@ -214,7 +214,7 @@ const ArticleForm = () => {
             <option value="kinhte">Kinh tế</option>
             <option value="quocte">Quốc tế</option>
             <option value="tingiasuthat">Tin giả & sự thật</option>
-            <option value="gioitre">Khoa học</option>
+            <option value="gioitre">Giới trẻ</option>
             <option value="gocnhin">Góc nhìn</option>
             <option value="nhanvan">Nhân văn</option>
             <option value="thethao">Thể thao</option>
