@@ -54,7 +54,7 @@ const HomePage = () => {
             onClick={() => navigate(`/article/${featured.slug}`)}
             className='flex bg-gray-100 gap-2 cursor-pointer
           '>
-            <img src={featured?.thumbnail} alt="" className='flex-6 w-110 object-cover object-center' />
+            <img src={featured?.thumbnail} alt="" className='flex-6 w-110 max-h-70 object-cover object-center' />
             <div className='flex-4 p-5 flex flex-col items-center gap-3'>
               <span className=' text-xl font-semibold text-ellipsis line-clamp-3'>
                 {featured?.title}
