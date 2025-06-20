@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchArticles } from '../features/articles/articleSlice';
 import ad1 from '../assets/ad1.png';
+import Loading from '../components/Loading/Loading';
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -24,6 +25,14 @@ const SearchPage = () => {
     }; 
     fetchResults();
   }, [query]);
+
+  if (loading) {
+    return(
+        <div className='w-full min-h-screen flex justify-center items-center'>
+            <Loading/>
+        </div>
+    )
+  }
 
   return (
       <div className='w-[75%] mx-auto py-5'>
