@@ -28,11 +28,12 @@ const HeroSection = ({ featuredArticle }) => {
 
 
   return (
-    <section className="relative flex justify-center bg-gray-100 mb-8">
+    <section className="relative flex justify-center bg-gray-100 mb-8 cursor-pointer">
         <img 
+          onClick={() => window.open(`https://www.coca-cola.com/vn/vi`)}
           src={hero}
           alt="hero"
-          className='w-[75%] max-h-25 object-cover object-center' 
+          className='w-[75%] max-h-30 object-cover object-center' 
         />  
       {/* <div className="max-w-7xl mx-auto px-4 py-8 md:flex md:gap-8">
         <div className="md:w-1/2">

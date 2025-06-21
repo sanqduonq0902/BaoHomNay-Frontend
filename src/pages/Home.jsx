@@ -152,8 +152,9 @@ const HomePage = () => {
             </div>
 
             <img src={subBanner}
+              onClick={() => window.open(`https://www.coca-cola.com/vn/vi`)}
               className='
-                w-full object-cover object-center rounded 
+                w-full object-cover max-h-30 object-center rounded shadow cursor-pointer
             '/>
 
             <div className='h-fit py-3 px-8 shadow'>
