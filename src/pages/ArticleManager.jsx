@@ -34,7 +34,10 @@ const ArticleManager = () => {
   return (
     <div className="p-6 max-w-5xl mx-auto">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Quản lý bài viết</h1>
+        <div className='flex flex-col gap-2'>
+          <h1 className="text-2xl font-bold">Quản lý bài viết</h1>
+          <h2 className="text-sm font-semibold text-slate-500">Tổng: {articles.length} bài viết</h2>
+        </div>
         <div className='flex gap-5 items-center'>
             <button
                 onClick={() => navigate('/articles/new')}
