@@ -22,6 +22,7 @@ const ArticleDetail = () => {
   const user = useSelector((state) => state.auth.user);
   const selected = useSelector((state) => state.articles.selected);
   const comments = useSelector((state) => state.comments.comments);
+  const loading = useSelector(state => state.comments.loading);
 
   const [commentText, setCommentText] = useState('');
 
@@ -185,9 +186,12 @@ const ArticleDetail = () => {
                 w-full p-2 border border-slate-300 outline-none
             '/>
             <button
+              disabled={loading}
               onClick={handleUploadComment} 
-              className='w-fit py-2 px-3 self-end bg-sky-500 text-white rounded shadow text-sm font-semibold cursor-pointer hover:bg-sky-600 transition-all
-            '>
+              className={`
+                w-fit py-2 px-3 self-end text-white rounded shadow text-sm font-semibold transition-all
+                ${loading ? 'bg-sky-300 cursor-not-allowed' : 'bg-sky-500 hover:bg-sky-600 cursor-pointer'}
+            `}>
               Gửi bình luận
             </button>
 
